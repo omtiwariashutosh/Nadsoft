@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Upsell 1 - NadSoft</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/upsell.css">
+</head>
+
+<body>
+    <div class="container py-5">
+        <div class="card upsell-card text-center mx-auto p-4" style="max-width: 500px;">
+            <img src="assets/img/upsell.jpg" class="img-fluid mb-4" alt="Upsell Product Image">
+            <h2 class="card-title">Special Offer Just for You!</h2>
+            <p class="lead mb-1">Get <strong>Upsell Product 1</strong></p>
+            <p class="price display-6 text-primary mb-4">Only ₹499</p>
+
+            <button id="addToOrder" class="btn btn-success btn-lg w-100 mb-3">Yes, Add to My Order</button>
+            <a href="upsell2.html" class="text-muted">No, Thanks</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('addToOrder').addEventListener('click', function () {
+            fetch('upsell1.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    product: 'UpSell Product1',
+                    price: 499
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = 'upsell2.html';
+                    } else {
+                        alert(data.message || 'Something went wrong.');
+                        window.location.href = 'index.html';
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Server error.');
+                });
+        });
+    </script>
+
+</body>
+
+</html>
